@@ -31,7 +31,7 @@ For example with the `parallel` [command](https://www.gnu.org/software/parallel/
 
 `parallel --jobs 20 --progress python3 -m main --data_dir data/arc-agi/data/evaluation --provider anthropic --model claude-3-5-sonnet-20241022 --task_id {} --save_submission_dir submissions/claude_sonnet_20241022 --print_logs :::: ./data/task_lists/public_evaluation.txt`
 
-Note: In order to use parllel you'll need a list of task ids. `generate_tasks_list.py` helps with this. Public data task ids are already supplied.
+Note: In order to use parallel you'll need a list of task ids. `generate_tasks_list.py` helps with this. Public data task ids are already supplied.
 
 `python3 -m src.utils.generate_tasks_list --task_dir data/arc-agi/data/training --output_file data/task_lists/public_training`
 
