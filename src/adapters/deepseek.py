@@ -35,11 +35,6 @@ class DeepSeekAdapter(ProviderAdapter):
     def chat_completion(self, messages: str) -> str:
         return self.client.chat.completions.create(
             model=self.model_name,
-            # TODO: parameterize the reasoning_effort (including not setting it since it's only supported
-            # o1, as of 12/19/2024)
-            # Default value for o1 is 'medium'.
-            # Uncomment to set a different value.
-            # reasoning_effort='high',
             messages=messages,
         )
 
