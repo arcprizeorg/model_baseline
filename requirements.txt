@@ -24,3 +24,4 @@ tqdm==4.66.5
 typing_extensions==4.12.2
 urllib3==2.2.3
 openai==1.58.1
+google-generativeai>=0.3.0
