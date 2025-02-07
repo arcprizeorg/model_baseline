@@ -50,56 +50,6 @@ class AnthropicAdapter(ProviderAdapter):
         )
         return response
 
-    def extract_json_from_response(self, input_response: str) -> List[List[int]]:
-        tools = [
-            {
-                "name": "extract_json",
-                "description": "Extracts JSON from the response.",
-                "input_schema": {
-                    "type": "object",
-                    "properties": {
-                        "response": {
-                            "type": "array",
-                            "items": {
-                                "type": "array",
-                                "items": {
-                                    "type": "integer"
-                                }
-                            },
-                            "description": "A list of lists of integers extracted from the response."
-                        }
-                    },
-                    "required": ["response"]
-                }
-            }
-        ]
-
-        text = f"Extract JSON of the test output from the following response: {input_response}"
-
-        query = f"""
-        <document>
-        {text}
-        </document>
-
-        Use the extract_json tool.
-        """
-
-        response = self.chat_completion(
-            messages=[{"role": "user", "content": query}],
-            tools=tools
-        )
-
-        json_response = None
-        for content in response.content:
-            if content.type == "tool_use" and content.name == "extract_json":
-                json_entities = content.input
-                break
-
-        if json_entities:
-            return json_entities['response']
-        else:
-            return None
-        
 if __name__ == "__main__":
     adapter = AnthropicAdapter("claude-3-5-sonnet-20240620")
     print(type(adapter.extract_json_from_response("[[1, 2, 3], [4, 5, 6]]")))

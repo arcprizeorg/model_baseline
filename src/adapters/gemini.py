@@ -39,35 +39,3 @@ class GeminiAdapter(ProviderAdapter):
             stream=False
         )
         return response
-
-    def extract_json_from_response(self, input_response: str) -> Optional[List[List[int]]]:
-        prompt = f"""
-        Extract only the JSON of the test output from the following response.
-        Remove any markdown code blocks and return only valid JSON.
-
-        Response:
-        {input_response}
-
-        The JSON should be in this format:
-        {{
-            "response": [
-                [1, 2, 3],
-                [4, 5, 6]
-            ]
-        }}
-        """
-
-        response = self.model.generate_content(prompt)
-        content = response.text.strip()
-
-        # Handle possible code block formatting
-        if content.startswith("```json"):
-            content = content[7:].strip()
-        if content.endswith("```"):
-            content = content[:-3].strip()
-
-        try:
-            json_data = json.loads(content)
-            return json_data.get("response")
-        except json.JSONDecodeError:
-            return None
